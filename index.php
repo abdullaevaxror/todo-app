@@ -11,9 +11,16 @@
 
 </head>
 <style>
+    body {
+        background-image: url("https://img.freepik.com/premium-vector/dark-concrete-background-with-grunge-effect_278222-9641.jpg");
+        background-size: cover;
+        background-position: center;
+    }
     .todo-body {
         max-width: 700px;
         box-shadow: 0 0 5px #ccc;
+        background: #fff;
+        border-radius: 8px;
     }
 
     .todo-text {
@@ -32,7 +39,12 @@
             <div class="input-group mb-3">
                 <input type="text" class="form-control" placeholder="Recipient's username"
                        aria-label="Recipient's username" aria-describedby="button-addon2">
-                <button class="btn btn-primary" type="button" id="button-addon2">Add</button>
+                <select name="status" id="" style="margin:0 20px;">
+                    <option value="pending">Pending</option>
+                    <option value="in_progress">In Progress</option>
+                    <option value="completed">Completed</option>
+                </select>
+                <button class="btn btn-primary" id="button-addon2">Add</button>
             </div>
             <ul class="list-group-item">
                 <li class="list-group-item d-flex justify-content-between align-items-center">
