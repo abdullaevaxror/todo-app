@@ -1,71 +1,21 @@
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport"
-          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
-          integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+<?php
 
-</head>
-<style>
-    body {
-        background-image: url("https://img.freepik.com/premium-vector/dark-concrete-background-with-grunge-effect_278222-9641.jpg");
-        background-size: cover;
-        background-position: center;
-    }
-    .todo-body {
-        max-width: 700px;
-        box-shadow: 0 0 5px #ccc;
-        background: #fff;
-        border-radius: 8px;
-    }
+$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
-    .todo-text {
-        font-weight: bold;
-    }
-</style>
-<body>
-<div class="container">
-    <div class="row d-flex justify-content-center">
-        <div class="todo-body my-5 p-3">
-            <h1 class="text-center todo-text">Todo App</h1>
-            <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Accusantium, ad adipisci amet consequatur
-                dolorem
-                ducimus ea fugit, natus officia omnis porro quaerat quisquam, quo quos recusandae repellendus sint unde
-                voluptate?</p>
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Recipient's username"
-                       aria-label="Recipient's username" aria-describedby="button-addon2">
-                <select name="status" id="" style="margin:0 20px;">
-                    <option value="pending">Pending</option>
-                    <option value="in_progress">In Progress</option>
-                    <option value="completed">Completed</option>
-                </select>
-                <button class="btn btn-primary" id="button-addon2">Add</button>
-            </div>
-            <ul class="list-group-item">
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    An item
-                    <button class="btn btn-outline-success">Done</button>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    An item
-                    <button class="btn btn-outline-success">Done</button>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    An item
-                    <button class="btn btn-outline-success">Done</button>
-                </li>
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    An item
-                    <button class="btn btn-outline-success">Done</button>
-                </li>
-            </ul>
-        </div>
-    </div>
-</div>
-</body>
-</html>
+require 'src/Todo.php';
+
+require 'helpers.php';
+
+$todo = new Todo();
+    if ($uri == '/') {
+        $todos = $todo->get();
+        view('home');
+    } elseif ($uri == '/store') {
+        if (isset($_POST['title'])) {
+//            var_dump($_POST['title']);
+            $todo->store($_POST['title'], $_POST['due_date']);
+            header('Localhost: /');
+            exit();
+        }
+
+}
