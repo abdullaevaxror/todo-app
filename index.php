@@ -1,43 +1,47 @@
 <?php
 
-$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
+//$uri = parse_url($_SERVER['REQUEST_URI'], PHP_URL_PATH);
 
 require 'src/Todo.php';
-
 require 'helpers.php';
-
+require 'src/Router.php';
+$router = new Router();
 $todo = new Todo();
-if ($uri == '/') {
-    $todos = $todo->get();
-    view('home', [
+
+$router->get('/', function () {
+    view('home');
+});
+$router->get('/todos', function () use ($todo) {
+    $todos = $todo->getAllTodos();
+    view('todo', [
         'todos' => $todos
     ]);
-} elseif ($uri == '/store') {
+});
+
+$router->post('/todos', function () use ($todo){
     if (!empty($_POST['title']) && !empty($_POST['due_date'])) {
-//            var_dump($_POST['title']);
         $todo->store($_POST['title'], $_POST['due_date']);
-        header('Location: /');
+        header('Location: /todos');
         exit();
     }
-} elseif ($uri == '/complete') {
-    var_dump($_GET);
-    if (!empty($_GET['id'])) {
-        $todo->complete($_GET['id']);
-        header('Location: /');
+});
+
+//var_dump(123);
+$router->get('/complete/{id}', function ($todoId) use ($todo) {
+        $todo->complete($todoId);
+        header('Location: /todos');
         exit();
-    }
-} elseif ($uri == '/in-progress') {
-    if (!empty($_GET['id'])) {
-        $todo->in_progress($_GET['id']);
-        header('Location: /');
+
+});
+
+$router->get('/in-progress/{id}', function ($todoId) use ($todo) {
+        $todo->in_progress($todoId);
+        header('Location: /todos');
         exit();
-//    } else {
-//        header('Location: /');
-    }
-}elseif ($uri == '/pending') {
-    if (!empty($_GET['id'])) {
-        $todo->pending($_GET['id']);
-        header('Location: /');
+});
+
+$router->get('/pending/{id}', function ($todoId) use ($todo) {
+        $todo->pending($todoId);
+        header('Location: /todos');
         exit();
-    }
-}
+});
