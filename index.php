@@ -8,6 +8,14 @@ require 'src/Router.php';
 $router = new Router();
 $todo = new Todo();
 
+$router->get('/todos/{id}/edit', function ($todoId) use($todo) {
+    echo 'Edit the task: ' . $todoId;
+    $getTodo = $todo->getTodo($todoId);
+    view('edit', [
+        'todo'=>$getTodo
+    ]);
+});
+
 $router->get('/', function () {
     view('home');
 });
@@ -44,4 +52,8 @@ $router->get('/pending/{id}', function ($todoId) use ($todo) {
         $todo->pending($todoId);
         header('Location: /todos');
         exit();
+});
+$router->get('/todos/{id}/delete', function ($todoId) use ($todo) {
+    $todo->destrov($todoId);
+    redirect('/todos');
 });

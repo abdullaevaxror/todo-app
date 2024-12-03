@@ -9,8 +9,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet"
 </head>
 <body>
-    <div class="container d-flex justify-content-center align-items-center vh-100">
-        <a href="/todos" class="btn btn-outline-primary">Todos</a>
-    </div>
+<div class="container d-flex justify-content-center align-items-center vh-100">
+    <a href="/todos" class="btn btn-outline-primary">Todos</a>
+</div>
 </body>
 </html>
